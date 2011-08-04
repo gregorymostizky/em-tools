@@ -4,13 +4,13 @@ require "em-tools/version"
 
 Gem::Specification.new do |s|
   s.name        = "em-tools"
-  s.version     = Em::Tools::VERSION
+  s.version     = EventMachine::Tools::VERSION
   s.platform    = Gem::Platform::RUBY
-  s.authors     = ["TODO: Write your name"]
-  s.email       = ["TODO: Write your email address"]
+  s.authors     = ["Gregory Mostizky"]
+  s.email       = ["gregory.mostizky@gmail.com"]
   s.homepage    = ""
-  s.summary     = %q{TODO: Write a gem summary}
-  s.description = %q{TODO: Write a gem description}
+  s.summary     = %q{A bunch of tools that simplify/enhance working with EventMachine}
+  s.description = %q{A bunch of tools that simplify/enhance working with EventMachine}
 
   s.rubyforge_project = "em-tools"
 
@@ -18,4 +18,7 @@ Gem::Specification.new do |s|
   s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")
   s.executables   = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
   s.require_paths = ["lib"]
+
+  s.add_dependency('eventmachine')
+  s.add_dependency('em-synchrony')
 end

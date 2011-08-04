@@ -1,4 +1,4 @@
-module Em
+module EventMachine
   module Tools
     # Your code goes here...
   end
