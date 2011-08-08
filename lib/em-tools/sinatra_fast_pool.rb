@@ -1,6 +1,8 @@
 #encoding: utf-8
 require_relative 'fast_pool'
 
+require 'async_sinatra'
+
 module Sinatra
   module Async
     module Helpers
@@ -9,7 +11,7 @@ module Sinatra
       module_eval %[
         alias :__async_catch_execute :async_catch_execute
 
-        @@fb = FastPool.new
+        @@fb = EventMachine::Tools::FastPool.new
         
         def async_catch_execute(&b)
           @@fb.spawn {__async_catch_execute(&b)}

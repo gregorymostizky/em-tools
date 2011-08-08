@@ -21,4 +21,5 @@ Gem::Specification.new do |s|
 
   s.add_dependency('eventmachine')
   s.add_dependency('em-synchrony')
+  s.add_dependency('async_sinatra')
 end
