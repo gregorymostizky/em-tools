@@ -13,32 +13,30 @@
 
 # Do NOT "set -e"
 
-# The modified version loads a list of app folders from /etc/thin/apps.conf and then runs a separate thin from that folder
-# Making sure that correct bundler and RVMRC are picked up
+# Changes by Gregory Mostizky
+# Instead of running thin for all configurations, we run thin for each configuration separately.
+# We also take care to load proper RVM environment (defined in $app_home/config.rvm) as well as bundle
+# All application folders are defined in /etc/thin/apps.conf file
 
-BUNDLE=/usr/local/bin/bundle
-DAEMON=/usr/local/bin/thin
+RVM=/usr/local/rvm
 SCRIPT_NAME=/etc/init.d/thin
 CONFIG_PATH=/etc/thin
 
 # Exit if the package is not installed
-[ -x "$DAEMON" ] || exit 0
+#[ -x "thin" ] || exit 0
 
 case "$1" in
   start)
-        #$DAEMON start --all $CONFIG_PATH
-        for app in `cat /etc/thin/apps.conf`; do cd $app && $BUNDLE exec $DAEMON start --config $app/thin.yaml; done
-        ;;
+	for app in `cat $CONFIG_PATH/apps.conf`; do cd $app && source "$RVM/environments/`cat config.rvm`" && bundle exec thin start --config $app/thin.yaml; done
+	;;
   stop)
-        #$DAEMON stop --all $CONFIG_PATH
-        for app in `cat /etc/thin/apps.conf`; do cd $app && $BUNDLE exec $DAEMON stop --config $app/thin.yaml; done
-        ;;
+        for app in `cat $CONFIG_PATH/apps.conf`; do cd $app && source "$RVM/environments/`cat config.rvm`" && bundle exec thin stop --config $app/thin.yaml; done
+	;;
   restart)
-        #$DAEMON restart --all $CONFIG_PATH
-        for app in `cat /etc/thin/apps.conf`; do cd $app && $BUNDLE exec $DAEMON restart --config $app/thin.yaml; done
-        ;;
+          for app in `cat $CONFIG_PATH/apps.conf`; do cd $app && source "$RVM/environments/`cat config.rvm`" && bundle exec thin restart --config $app/thin.yaml; done
+	;;
   *)
-        echo "Usage: $SCRIPT_NAME {start|stop|restart}" >&2
-        exit 3
-        ;;
+	echo "Usage: $SCRIPT_NAME {start|stop|restart}" >&2
+	exit 3
+	;;
 esac
