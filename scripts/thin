@@ -27,16 +27,17 @@ CONFIG_PATH=/etc/thin
 
 case "$1" in
   start)
-	for app in `cat $CONFIG_PATH/apps.conf`; do cd $app && source "$RVM/environments/`cat config.rvm`" && bundle exec thin start --config $app/thin.yaml; done
-	;;
+	  for app in `cat $CONFIG_PATH/apps.conf`; do cd $app && source "$RVM/environments/`cat config.rvm`" && bundle exec thin start --config $app/thin.yaml; done
+	  ;;
   stop)
-        for app in `cat $CONFIG_PATH/apps.conf`; do cd $app && source "$RVM/environments/`cat config.rvm`" && bundle exec thin stop --config $app/thin.yaml; done
-	;;
+    for app in `cat $CONFIG_PATH/apps.conf`; do cd $app && source "$RVM/environments/`cat config.rvm`" && bundle exec thin stop --config $app/thin.yaml; done
+	  ;;
   restart)
-          for app in `cat $CONFIG_PATH/apps.conf`; do cd $app && source "$RVM/environments/`cat config.rvm`" && bundle exec thin restart --config $app/thin.yaml; done
-	;;
+    for app in `cat $CONFIG_PATH/apps.conf`; do cd $app && source "$RVM/environments/`cat config.rvm`" && bundle exec thin restart --config $app/thin.yaml; done
+	  ;;
   *)
-	echo "Usage: $SCRIPT_NAME {start|stop|restart}" >&2
-	exit 3
-	;;
+	  echo "Usage: $SCRIPT_NAME {start|stop|restart}" >&2
+	  exit 3
+	  ;;
+
 esac
