@@ -13,6 +13,9 @@
 
 # Do NOT "set -e"
 
+# The modified version loads a list of app folders from /etc/thin/apps.conf and then runs a separate thin from that folder
+# Making sure that correct bundler and RVMRC are picked up
+
 BUNDLE=/usr/local/bin/bundle
 DAEMON=/usr/local/bin/thin
 SCRIPT_NAME=/etc/init.d/thin
