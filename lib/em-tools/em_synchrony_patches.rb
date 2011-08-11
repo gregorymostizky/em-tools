@@ -1,4 +1,14 @@
 #encoding: utf-8
+require 'fiber'
+
+class Fiber
+
+  # make sure that resume happens after the yield
+  def resume_next_tick(*args)
+    EM.next_tick { resume(*args) }
+  end
+
+end
 
 module EventMachine
   module Synchrony
@@ -14,7 +24,7 @@ module EventMachine
     #   result = EM::Synchrony.wait_callback(redis, :get, 'a')
     def self.wait_callback(object, method, *args)
       f = Fiber.current
-      object.send(method, *args, &f.method(:resume) )
+      object.send(method, *args, &f.method(:resume_next_tick) )
       Fiber.yield(nil)
     end
 
